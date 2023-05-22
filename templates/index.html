@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Your Data</title>
+    <title>Assistant Dexem</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .chat-body {
@@ -126,13 +126,13 @@
 <body class="bg-black">
     <div class="chat-body card">
         <div class="card-body p-5">
-            <h4 class="card-title text-center text-xl font-medium"> Chat Your Data </h4>
-            <p class="card-text text-center text-sm" id="header"> Ask a question </p>
+            <h4 class="card-title text-center text-xl font-medium"> Assistant Dexem </h4>
+            <p class="card-text text-center text-sm" id="header"> Posez votre question </p>
             <hr class="border-gray-500 mb-5" style="margin-top: 20px;">
             <div id="messages" class="overflow-auto" style="max-height: 500px;">
             </div>
             <form action="" class="form-inline mt-5" id="chat-form" onsubmit="sendMessage(event)">
-                <input type="text" class="form-control" placeholder="Write your question" id="messageText">
+                <input type="text" class="form-control" placeholder="Écrivez votre question" id="messageText">
                 <button id="send" type="submit" class="btn btn-primary">Send</button>
             </form>
         </div>

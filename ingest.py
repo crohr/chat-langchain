@@ -5,14 +5,21 @@ from langchain.document_loaders import ReadTheDocsLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores.faiss import FAISS
-
+from langchain.document_loaders import DirectoryLoader
+from langchain.document_loaders import UnstructuredHTMLLoader
+from langchain.document_loaders import BSHTMLLoader
+from dexem_loader import DexemLoader
 
 def ingest_docs():
     """Get documents from web pages."""
-    loader = ReadTheDocsLoader("langchain.readthedocs.io/en/latest/")
+    loader = DirectoryLoader('./sources', glob="**/*.html", show_progress=True, use_multithreading=False, loader_cls=DexemLoader)
+    
     raw_documents = loader.load()
+    print(len(raw_documents))
+    print(raw_documents[0])
+
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
+        chunk_size=2000,
         chunk_overlap=200,
     )
     documents = text_splitter.split_documents(raw_documents)

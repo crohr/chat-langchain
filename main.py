@@ -11,6 +11,7 @@ from langchain.vectorstores import VectorStore
 from callback import QuestionGenCallbackHandler, StreamingLLMCallbackHandler
 from query_data import get_chain
 from schemas import ChatResponse
+from pprint import pprint
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -52,11 +53,13 @@ async def websocket_endpoint(websocket: WebSocket):
 
             # Construct a response
             start_resp = ChatResponse(sender="bot", message="", type="start")
+            pprint(start_resp)
             await websocket.send_json(start_resp.dict())
 
             result = await qa_chain.acall(
                 {"question": question, "chat_history": chat_history}
             )
+            pprint(result)
             chat_history.append((question, result["answer"]))
 
             end_resp = ChatResponse(sender="bot", message="", type="end")
