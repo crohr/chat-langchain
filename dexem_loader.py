@@ -42,9 +42,10 @@ class DexemLoader(BaseLoader):
     def load(self) -> List[Document]:
         """Load documents."""
         from bs4 import BeautifulSoup
-        print(self.file_path)
 
         if ("/feed/" in self.file_path or "/author/" in self.file_path):
+            print(self.file_path)
+            print("ignore")
             return []
 
         with open(self.file_path, encoding=self.encoding, errors=self.errors) as f:
