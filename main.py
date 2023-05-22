@@ -12,6 +12,7 @@ from callback import QuestionGenCallbackHandler, StreamingLLMCallbackHandler
 from query_data import get_chain
 from schemas import ChatResponse
 from pprint import pprint
+import re
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -53,14 +54,26 @@ async def websocket_endpoint(websocket: WebSocket):
 
             # Construct a response
             start_resp = ChatResponse(sender="bot", message="", type="start")
+            print("start_resp")
             pprint(start_resp)
             await websocket.send_json(start_resp.dict())
 
             result = await qa_chain.acall(
                 {"question": question, "chat_history": chat_history}
             )
+            print("result")
             pprint(result)
             chat_history.append((question, result["answer"]))
+
+            if (len(result['question']) > 20 and len(result["source_documents"]) > 0):
+                message = re.sub(r'^sources\/', 'https://', result["source_documents"][0].metadata["source"])
+                message = re.sub(r'index\.html$', '', message)
+                source_resp = ChatResponse(
+                    sender="bot",
+                    message=message,
+                    type="source",
+                )
+                await websocket.send_json(source_resp.dict())
 
             end_resp = ChatResponse(sender="bot", message="", type="end")
             await websocket.send_json(end_resp.dict())

@@ -9,6 +9,10 @@
             width: 550px;
             margin: 50px auto;
         }
+        .chat-body a {
+            color: #FF6700;
+            text-decoration: underline;
+        }
         .card-body {
             background-color: #333;
             color: #fff;
@@ -79,6 +83,10 @@
                 } else if (data.type === "info") {
                     var header = document.getElementById('header');
                     header.innerHTML = data.message;
+                } else if (data.type === "source") {
+                    var p = messages.lastChild.lastChild;
+                    p.innerHTML += "<br><br>";
+                    p.innerHTML += "<a href='" + data.message + "' target=blank>" + data.message + "</a>";
                 } else if (data.type === "end") {
                     var header = document.getElementById('header');
                     header.innerHTML = "Ask a question";

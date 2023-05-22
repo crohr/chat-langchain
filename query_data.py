@@ -69,6 +69,7 @@ def get_chain(
     qa = ConversationalRetrievalChain(
         retriever=vectorstore.as_retriever(),
         combine_docs_chain=doc_chain,
+        return_source_documents=True,
         question_generator=question_generator,
         callback_manager=manager,
     )
